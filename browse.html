@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage - Browse Cars</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: url('audic.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.452);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .button-box {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.303);
+            top:18%;
+            right:175px;
+            padding: 20px;
+            width: 435px; 
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button-box h2 {
+            margin-bottom: 10px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .button-box p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+        }
+
+        .button {
+            padding: 15px 25px;
+            background-color: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:hover {
+            background-color: #1e40af;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.452);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+
+    </style>
+    
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Voyage</h1>
+    </div>
+
+    <!-- button to view cars -->
+    <div class="button-box">
+        <h2>Welcome to Voyage</h2>
+        <p>Find the best deals on rental cars across various sites.</p>
+        <button class="button" onclick="browseCars()">Browse Cars</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 Voyage. All Rights Reserved.
+    </div>
+
+    <!-- Direct to view cars -->
+    <script>
+        function browseCars() {
+            window.location.href = "miniproject02.html"; 
+        }
+    </script>
+
+</body>
+</html>

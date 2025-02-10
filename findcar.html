@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find My Car</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: green;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Questionaire</h1>
+    <p>Answer a few questions to find the best vehicle for you!</p>
+
+    <div class="container">
+        <div class="question">
+            <label for="group-size">How many people are traveling?</label>
+            <select id="group-size">
+                <option value="1-2">1-2</option>
+                <option value="3-4">3-4</option>
+                <option value="5+">5 or more</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label for="purpose">What is the purpose of your trip?</label>
+            <select id="purpose">
+                <option value="business">Business</option>
+                <option value="leisure">Leisure</option>
+                <option value="family">Family Trip</option>
+                <option value="Moving">Moving/Towing</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label for="budget">What is your budget?</label>
+            <select id="budget">
+                <option value="economy">Economy</option>
+                <option value="mid">Mid-size</option>
+                <option value="luxury">Luxury</option>\
+                <option value="Trucks">Trucks</option>
+            </select>
+        </div>
+
+        <button onclick="findCar()">Find My Car</button>
+        <button class="back-button" onclick="goBack()">Go back to cars</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+    const cars = [
+    
+    {title: "Economy", category: "Economy", price: 64.09, description: "Mitsubishi Mirage", image: "mirage.jpg", rating: 4.8, mpg: 39.5, seats: 5,reserveUrl:"https://www.enterprise.com/en/reserve.html#review"},
+    {title: "Economy", category: "Economy", price: 46, description: "Chevrolet Spark", image: "spark.jpg", rating: 4.8, mpg: 35, seats: 2,reserveUrl:"https://www.hertz.ca/rentacar/reservation/#extras"},
+    {title: "Economy", category: "Economy", price: 61, description: "Hyundai Veloster", image: "veloster.jpg", rating: 4.6, mpg: 30.5, zeroToSixty: 6.2, seats: 2,reserveUrl:"https://www.thrifty.com/us/en/book/ancillaries/coverage?ddate=2025-03-05T13%3A00%3A00&did=SHV&pCountryCode=US&pdate=2025-02-03T12%3A00%3A00&pid=SHV&rateQuoteIds=,RCU28%7CVSJJKN7FC872094-41%7C1&sippCode=EDAR"},
+
+    // Midsize
+    {title: "Mid-size", category: "Mid-size", price: 62, description: "Chevrolet Cruze", image: "cruze.jpg", rating: 4.8, mpg: 42.7, zeroToSixty: 6.0, seats: 5, reserveUrl:"https://www.thrifty.com/us/en/book/ancillaries/coverage?ddate=2025-03-05T13%3A00%3A00&did=SHV&pCountryCode=US&pdate=2025-02-03T12%3A00%3A00&pid=SHV&rateQuoteIds=,RCU28%7CYSRAHAM52W72100-41%7C1&sippCode=IDAR"},
+    {title: "Mid-size", category: "Mid-size", price: 46, description: "Mazda 3", image: "mazda.jpg", rating: 4.4, mpg: 31, zeroToSixty: 7.0, seats: 5, reserveUrl:"https://www.hertz.com/us/en/book/ancillaries/coverage?CDP=2278478&age=25&ddate=2025-02-05T12%3A00%3A00&did=SHVT11&pCountryCode=US&pdate=2025-02-04T12%3A00%3A00&pid=SHVT11&rateQuoteIds=VCPD1%7C7FZBJID2LG72050-41%7C5,RCUD1%7C7FZBJID2LG72050-41%7C6&sippCode=ICAR&travelType=LEISURE"},
+    {title: "Mid-size", category: "Mid-size", price: 64.98, description: "Toyota Corolla", image: "corolla.jpg", rating: 4.5, mpg: 35, zeroToSixty: 8.5, seats: 5, reservUrl:"https://www.enterprise.com/en/reserve.html#extras"},
+
+    // Luxury
+    {title: "Luxury", category: "Luxury", price: 117, description: "Chrysler 300", image: "chrystler.jpg", rating: 4.8, mpg: 24.5, zeroToSixty: 5.8, seats: 5, reserveUrl:"https://www.thrifty.com/us/en/book/ancillaries/coverage?ddate=2025-03-05T13%3A00%3A00&did=SHV&pCountryCode=US&pdate=2025-02-03T12%3A00%3A00&pid=SHV&rateQuoteIds=,RCU28%7CSDH0QA4SWO72082-41%7C1&sippCode=LDAR"},
+    {title: "Luxury", category: "Luxury", price: 149, description: "Audi A3 or similar", image: "audi.jpg", rating: 4.8, mpg: 29, zeroToSixty: 5.3, seats: 5, reserveUrl:"https://www.enterprise.com/en/reserve.html#extras"},
+
+    // Full-size
+    {title: "Full-size", category: "Full-size", price: 56, description: "Kia Optima", image: "kia.jpg", rating: 4.7, mpg: 27, zeroToSixty: 4.3, seats: 5, reserveUrl:"https://www.thrifty.com/us/en/book/ancillaries/coverage?ddate=2025-03-05T13%3A00%3A00&did=SHV&pCountryCode=US&pdate=2025-02-03T12%3A00%3A00&pid=SHV&rateQuoteIds=,RCU28%7C8QIIPRIH5K72110-41%7C1&sippCode=FDAR"},
+    {title: "Full-size", category: "Full-size", price: 48, description: "Chevrolet Malibu", image: "malibu.jpg", rating: 4.9, mpg: 19, zeroToSixty: 4.0, seats: 4,reserveUrl:"https://www.hertz.com/us/en/book/ancillaries/coverage?CDP=2278478&age=25&ddate=2025-02-05T12%3A00%3A00&did=SHVT11&pCountryCode=US&pdate=2025-02-04T12%3A00%3A00&pid=SHVT11&rateQuoteIds=VCPD1%7C75D4HBIG1072089-41%7C9,RCUD1%7C75D4HBIG1072089-41%7C10&sippCode=FCAR&travelType=LEISURE"},
+    {title: "Full-size", category: "Full-size", price: 66.98, description: "Toyota Camry", image: "camry.jpg", rating: 4.9, mpg: 28, zeroToSixty: 4.2, seats: 4, reserveUrl:"https://www.enterprise.com/en/reserve.html#extras"},
+
+    // Mid-Size SUV
+    {title: "Mid-Size SUV", category: "Mid-Size SUV", price: 71, description: "Jeep Compass", image: "jeepCompass.jpg", rating: 4.7, mpg: 27, zeroToSixty: 4.3, seats: 5,reserveUrl:"https://www.thrifty.com/us/en/book/ancillaries/coverage?ddate=2025-03-05T13%3A00%3A00&did=SHV&pCountryCode=US&pdate=2025-02-03T12%3A00%3A00&pid=SHV&rateQuoteIds=,RCU28%7C2S81P0V18872082-41%7C1&sippCode=IFAR"},
+    {title: "Mid-Size SUV", category: "Mid-Size SUV", price: 75.98, description: "Nissan Rogue", image: "NissanRogue.jpg", rating: 4.9, mpg: 33.5, zeroToSixty: 4.0, seats: 4,reserveUrl:"https://www.hertz.com/us/en/book/ancillaries/coverage?CDP=2278478&age=25&ddate=2025-02-05T12%3A00%3A00&did=SHVT11&pCountryCode=US&pdate=2025-02-04T12%3A00%3A00&pid=SHVT11&rateQuoteIds=VCPD1%7CFP6LHIE20472110-41%7C14,RCUD1%7CFP6LHIE20472110-41%7C13&sippCode=IFAR&travelType=LEISURE"},
+
+    // Full-Size SUV
+    {title: " Full-Size SUV", category: "Full-Size SUV", price: 126.80, description: "Chevrolet Tahoe or similar", image: "tahoe.jpg", rating: 4.7, mpg: 18, zeroToSixty: 4.3, seats: 7, reserveUrl:"https://www.enterprise.com/en/reserve.html#extras"},
+
+    // Trucks
+    {title: "Trucks", category: "Trucks", price: 63.99, description: "Toyota Tacoma", image: "tacoma.jpg", rating: 4.7, mpg: 23, zeroToSixty: 4.3, seats: 5, reserveUrl:"https://www.enterprise.com/en/reserve.html#extras"}
+
+    ];
+
+        function findCar() {
+            const groupSize = document.getElementById("group-size").value;
+            const purpose = document.getElementById("purpose").value;
+            const budget = document.getElementById("budget").value;
+
+            let filteredCars = cars.filter(car => {
+
+            if (["Moving"].includes(purpose)) {
+                return car.category.toLowerCase().includes("trucks");
+            }
+
+            if (budget === "economy" && car.category === "Economy") return true;
+            if (budget === "mid" && car.category === "Mid-size") return true;
+            if (budget === "luxury" && car.category.toLowerCase().includes("luxury")) return true;
+
+    
+            if (groupSize === "5+" && (car.category.includes("SUV") || car.category.includes("Full-size"))) return true;
+
+            return false;
+        });
+
+
+            let resultHtml = "<h2>Recommended Cars:</h2>";
+            filteredCars.forEach(car => {
+                resultHtml += `<div><img src="${car.image}" alt="${car.description}" width="150"><p>${car.description} - $${car.price}/day</p><a href="${car.reserveUrl || '#'}" target="_blank">Reserve</a></div>`;
+            });
+
+            document.getElementById("result").innerHTML = resultHtml;
+        }
+
+    function goBack() {
+    window.location.href = 'miniproject02.html'; 
+}
+    </script>
+</body>
+</html>

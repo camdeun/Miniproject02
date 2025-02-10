@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarPrice Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .enterprise-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .thrifty-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hertz-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: red;
+        }
+        .enterprise-button:hover {
+            background-color: green;
+        }
+        .thrifty-button:hover {
+            background-color: lightblue;
+        }
+        .hertz-button:hover {
+            background-color: yellow;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Car Prices</h1>
+<p>Compare Prices across rental companies in $USD.</p>
+
+<div class="container">
+    <canvas id="priceGraph"></canvas>
+</div>
+
+<button class="back-button" onclick="goBack()">Go back to cars</button>
+<button class="enterprise-button" onclick="sitehopenterprise()">Go to Enterprise</button>
+<button class="thrifty-button" onclick="sitehopthrifty()">Go back toThrifty</button>
+<button class="hertz-button" onclick="sitehophertz()">Go to Hertz</button>
+<script>
+
+const cars = [
+    {title: "Economy", price: {Thrifty: 63, Enterprise: 64.08, Hertz: 46 }},
+    {title: "Luxury", price: {Enterprise: 149,Thrifty:117}},
+    {title: "Mid-size", price: {Thrifty: 61, Enterprise: 64.98 , Hertz: 46}},
+    {title: "Full-size", price: {Thrifty: 55, Enterprise: 66.09, Hertz: 48}},
+    {title: "Mid-size SUV", price: {Thrifty: 71, Hertz: 75.98}},
+    {title: "Full-size SUV", price: {Enterprise: 126.80}},
+    {title: "Trucks", price: {Enterprise: 63.99}},
+];
+
+// Extract car names and price data for each company
+const carLabels = cars.map(car => car.title); 
+const priceThrifty = cars.map(car => car.price.Thrifty); 
+const priceEnterprise = cars.map(car => car.price.Enterprise); 
+const priceHertz = cars.map(car => car.price.Hertz);
+
+const ctx = document.getElementById('priceGraph').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: carLabels,
+        datasets: [
+            {   
+                label: 'Thrifty',
+                data: priceThrifty,
+                backgroundColor: 'rgba(52, 152, 219, 0.6)', 
+                borderColor: 'rgba(52, 152, 219, 1)', 
+                borderWidth: 1
+            },
+            {
+                label: 'Enterprise',
+                data: priceEnterprise,
+                backgroundColor: 'rgba(46, 204, 113, 0.6)', 
+                borderColor: 'rgba(46, 204, 113, 1)', 
+                borderWidth: 1
+            },
+            {
+                label: 'Hertz',
+                data: priceHertz,
+                backgroundColor: 'rgba(241, 196, 15, 0.6)', 
+                borderColor: 'rgba(241, 196, 15, 1)', 
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true 
+            },
+            x: {
+                stacked: false 
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top' 
+            }
+        }
+    }
+});
+
+// Function to redirect to different pages
+function goBack() {
+    window.location.href = 'miniproject02.html'; 
+}
+function sitehopenterprise() {
+    window.location.href = 'https://www.enterprise.com/en/car-rental/campaigns/rent-a-car-b.html?mcid=paidsearch:33439277&targetid=kwd-15634068380:aud-806517200:loc-190&ef_id=a426bcc4398f1b5b3ac0db46d86c6970:G:s&s_kwcid=AL!4824!10!73667585621025!15634068380&gclid=a426bcc4398f1b5b3ac0db46d86c6970&gclsrc=3p.ds&msclkid=a426bcc4398f1b5b3ac0db46d86c6970&utm_source=bing&utm_medium=cpc&utm_campaign=E_M_US_SE_TP-999_B_EXM_NTL_EN_US&utm_term=enterprise&utm_content=M_B_Enterprise'; 
+}
+function sitehopthrifty() {
+    window.location.href = 'https://www.thrifty.com/us/en/deals-and-offers/base-rate-in-us-and-canada?&msclkid=d5525eba56871a0377453938b4ae724d&utm_source=bing&utm_medium=cpc&utm_campaign=Bing%20SEM%20Thrifty_United%20States_NAT_Brand_MULT&utm_term=thrifty%20car%20rental&utm_content=Car%20Rental%20High%20QS_MULT_NAT&gclid=d5525eba56871a0377453938b4ae724d&gclsrc=3p.ds';
+}
+function sitehophertz() {
+    window.location.href = 'https://www.hertz.com/rentacar/reservation/?msockid=245115ae51a866dc1e7900c250ff6773';
+}
+</script>
+
+</body>
+</html>
