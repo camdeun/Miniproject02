@@ -32,6 +32,9 @@
             padding: 15px 30px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            background-color: #3333335e;
+            color: white;
         }
 
         .navbar h1 {
@@ -39,35 +42,27 @@
             font-size: 24px;
             font-weight: bold;
         }
-        .navbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 20px;
-        background-color: #333;
-        color: white;
-    }
+       
+        .navbar-links {
+          list-style: none;
+          display: flex;
+          gap: 30px;
+          margin: 0;
+          padding: 0;
+        }
 
-    .navbar-links {
-        list-style: none;
-        display: flex;
-        gap: 30px;
-        margin: 0;
-        padding: 0;
-    }
+        .navbar-links .nav-item {
+          display: inline;
+        }
 
-    .navbar-links .nav-item {
-        display: inline;
-    }
+        .nav-link {
+          color: white;
+          font-size: 18px;
+        }
 
-    .nav-link {
-        color: white;
-        font-size: 18px;
-    }
-
-    .nav-link:hover {
-        text-decoration: underline;
-    }
+        .nav-link:hover {
+          text-decoration: underline;
+        }
         
         .button-box {
             position: absolute;
